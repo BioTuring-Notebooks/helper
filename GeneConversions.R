@@ -19,3 +19,15 @@ RenameGenesSeurat <- function(obj, newnames) { # Replace gene names in different
   obj@assays$RNA <- RNA
   return(obj)
 }
+
+PlotCRADGrid <- function(loc) {
+    require(ggplot2)
+    p <- ggplot(loc, 
+       aes(x = x, y = y)) + geom_point(shape=22,color = "#7dc7f5")+
+theme(plot.margin = margin(0.1, 0.1, 0.1, 0.1, "cm"),
+    legend.position="bottom",
+    panel.background = element_blank(),
+    plot.background = element_blank(),
+    panel.border = element_rect(colour = "grey89", fill=NA, size=0.5))
+    return(p)
+}
