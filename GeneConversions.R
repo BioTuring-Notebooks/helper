@@ -8,7 +8,13 @@ EnsembleToSymbolMouse <- function(obj) {
     return(obj)
 }
 
-RenameGenesSeurat <- function(obj, newnames) { # Replace gene names in different slots of a Seurat object. Run this before integration. Run this before integration. It only changes obj@assays$RNA@counts, @data and @scale.data.
+RenameGenesSeurat <- function(obj, reference_genome = EnsDb.Hsapiens.v79) { #Replace gene names in different slots of a Seurat object. Run this before integration. It only changes obj@assays$RNA@counts, @data and @scale.data.
+  gene <- ensembldb::select(reference_genome, keys = as.character(rownames(obj)), #Get list corresponding gene names to ensembl IDs of the object
+                              keytype = "GENEID", columns = c("SYMBOL","GENEID"))
+  newnames <- rownames(obj) #Obtain all gene symbols from the object
+  newnames[match(gene[[2]], newnames)] <- gene[[1]] #Convert all symbols to gene names
+  newnames <- as.character(newnames)
+    
   RNA <- obj@assays$RNA
 
   if (nrow(RNA) == length(newnames)) {
