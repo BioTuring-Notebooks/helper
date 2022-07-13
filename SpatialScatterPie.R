@@ -296,7 +296,7 @@ plotImage <- function(x, slice = NULL) {
     plt <- .plot_image(x)
 }
 
-plotSpatialScatterpie_bt <- function(
+plotSpatialScatterpie <- function(
     x,
     y,
     cell_types = colnames(y),
